@@ -1,10 +1,5 @@
-import DashboardLayout from './layouts/DashboardLayout'
-import DashboardPage from './pages/DashboardPage'
+import Router from './routes'
 
 export default function App() {
-  return (
-    <DashboardLayout>
-      <DashboardPage />
-    </DashboardLayout>
-  )
+  return <Router />
 }

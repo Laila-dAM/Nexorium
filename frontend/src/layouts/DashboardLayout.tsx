@@ -1,5 +1,15 @@
 import { ReactNode } from 'react'
-import { BarChart3, Boxes, LayoutDashboard, Users } from 'lucide-react'
+import {
+  BarChart3,
+  Boxes,
+  LayoutDashboard,
+  Users
+} from 'lucide-react'
+
+import {
+  Link,
+  useLocation
+} from 'react-router-dom'
 
 type DashboardLayoutProps = {
   children: ReactNode
@@ -8,18 +18,22 @@ type DashboardLayoutProps = {
 const navigation = [
   {
     name: 'Dashboard',
+    path: '/dashboard',
     icon: LayoutDashboard
   },
   {
     name: 'Customers',
+    path: '/customers',
     icon: Users
   },
   {
     name: 'Inventory',
+    path: '/inventory',
     icon: Boxes
   },
   {
     name: 'Analytics',
+    path: '/analytics',
     icon: BarChart3
   }
 ]
@@ -27,6 +41,8 @@ const navigation = [
 export default function DashboardLayout({
   children
 }: DashboardLayoutProps) {
+  const location = useLocation()
+
   return (
     <div className="flex min-h-screen bg-[#050816] text-white">
       <aside className="flex w-72 flex-col border-r border-white/10 bg-white/5 backdrop-blur-xl">
@@ -44,15 +60,23 @@ export default function DashboardLayout({
           {navigation.map((item) => {
             const Icon = item.icon
 
+            const isActive =
+              location.pathname === item.path
+
             return (
-              <button
+              <Link
                 key={item.name}
-                className="flex items-center gap-3 rounded-2xl px-4 py-3 text-white/70 transition hover:bg-white/10 hover:text-white"
+                to={item.path}
+                className={`flex items-center gap-3 rounded-2xl px-4 py-3 transition ${
+                  isActive
+                    ? 'bg-cyan-400 text-black'
+                    : 'text-white/70 hover:bg-white/10 hover:text-white'
+                }`}
               >
                 <Icon size={20} />
 
                 <span>{item.name}</span>
-              </button>
+              </Link>
             )
           })}
         </nav>
