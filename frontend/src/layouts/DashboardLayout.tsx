@@ -1,15 +1,25 @@
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
+import { useTheme } from '../contexts/ThemeContext'
+
 import {
   BarChart3,
+  Bell,
   Boxes,
+  ChevronLeft,
   LayoutDashboard,
-  Users
+  Menu,
+  Search,
+  Users,
+  Sun,
+  Moon
 } from 'lucide-react'
 
 import {
   Link,
   useLocation
 } from 'react-router-dom'
+
+import { motion } from 'framer-motion'
 
 type DashboardLayoutProps = {
   children: ReactNode
@@ -43,17 +53,44 @@ export default function DashboardLayout({
 }: DashboardLayoutProps) {
   const location = useLocation()
 
+  const [collapsed, setCollapsed] = useState(false)
+
+  const {
+    theme,
+    toggleTheme
+  } = useTheme()
+
   return (
     <div className="flex min-h-screen bg-[#050816] text-white">
-      <aside className="flex w-72 flex-col border-r border-white/10 bg-white/5 backdrop-blur-xl">
-        <div className="border-b border-white/10 p-8">
-          <h1 className="text-3xl font-black tracking-tight">
-            Nexorium
-          </h1>
+      <motion.aside
+        animate={{
+          width: collapsed ? 100 : 288
+        }}
+        className="flex flex-col border-r border-white/10 bg-white/5 backdrop-blur-xl"
+      >
+        <div className="flex items-center justify-between border-b border-white/10 p-6">
+          {!collapsed && (
+            <div>
+              <h1 className="text-3xl font-black tracking-tight">
+                Nexorium
+              </h1>
 
-          <p className="mt-2 text-sm text-white/50">
-            Intelligent ERP Platform
-          </p>
+              <p className="mt-1 text-sm text-white/50">
+                ERP SaaS Platform
+              </p>
+            </div>
+          )}
+
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="rounded-xl p-2 transition hover:bg-white/10"
+          >
+            {collapsed ? (
+              <Menu size={22} />
+            ) : (
+              <ChevronLeft size={22} />
+            )}
+          </button>
         </div>
 
         <nav className="flex flex-1 flex-col gap-2 p-4">
@@ -75,12 +112,32 @@ export default function DashboardLayout({
               >
                 <Icon size={20} />
 
-                <span>{item.name}</span>
+                {!collapsed && (
+                  <span>{item.name}</span>
+                )}
               </Link>
             )
           })}
         </nav>
-      </aside>
+
+        <div className="border-t border-white/10 p-4">
+          <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-3">
+            <div className="h-11 w-11 rounded-full bg-cyan-400" />
+
+            {!collapsed && (
+              <div>
+                <strong className="block">
+                  Admin User
+                </strong>
+
+                <span className="text-sm text-white/50">
+                  Administrator
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      </motion.aside>
 
       <main className="flex flex-1 flex-col">
         <header className="flex items-center justify-between border-b border-white/10 bg-white/5 px-8 py-5 backdrop-blur-xl">
@@ -95,6 +152,30 @@ export default function DashboardLayout({
           </div>
 
           <div className="flex items-center gap-4">
+            <div className="hidden items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 lg:flex">
+              <Search size={18} />
+
+              <input
+                placeholder="Search..."
+                className="bg-transparent outline-none"
+              />
+            </div>
+
+            <button
+              onClick={toggleTheme}
+              className="rounded-2xl border border-white/10 bg-white/5 p-3 transition hover:bg-white/10"
+            >
+              {theme === 'dark' ? (
+                <Sun size={20} />
+              ) : (
+                <Moon size={20} />
+              )}
+            </button>
+
+            <button className="rounded-2xl border border-white/10 bg-white/5 p-3 transition hover:bg-white/10">
+              <Bell size={20} />
+            </button>
+
             <div className="h-11 w-11 rounded-full bg-cyan-400" />
           </div>
         </header>
