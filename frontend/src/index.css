@@ -11,3 +11,19 @@ body {
   background: #050816;
   font-family: Inter, sans-serif;
 }
+
+html {
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+html.dark {
+  background: #050816;
+  color: white;
+}
+
+html.light {
+  background: #f8fafc;
+  color: #0f172a;
+}

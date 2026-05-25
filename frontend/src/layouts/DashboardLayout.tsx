@@ -1,4 +1,5 @@
 import { ReactNode, useState } from 'react'
+import { useTheme } from '../contexts/ThemeContext'
 
 import {
   BarChart3,
@@ -8,7 +9,9 @@ import {
   LayoutDashboard,
   Menu,
   Search,
-  Users
+  Users,
+  Sun,
+  Moon
 } from 'lucide-react'
 
 import {
@@ -51,6 +54,11 @@ export default function DashboardLayout({
   const location = useLocation()
 
   const [collapsed, setCollapsed] = useState(false)
+
+  const {
+    theme,
+    toggleTheme
+  } = useTheme()
 
   return (
     <div className="flex min-h-screen bg-[#050816] text-white">
@@ -152,6 +160,17 @@ export default function DashboardLayout({
                 className="bg-transparent outline-none"
               />
             </div>
+
+            <button
+              onClick={toggleTheme}
+              className="rounded-2xl border border-white/10 bg-white/5 p-3 transition hover:bg-white/10"
+            >
+              {theme === 'dark' ? (
+                <Sun size={20} />
+              ) : (
+                <Moon size={20} />
+              )}
+            </button>
 
             <button className="rounded-2xl border border-white/10 bg-white/5 p-3 transition hover:bg-white/10">
               <Bell size={20} />
