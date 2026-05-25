@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import toast from 'react-hot-toast'
 
 import {
   ArrowRight,
@@ -12,11 +13,15 @@ export default function LoginPage() {
   const navigate = useNavigate()
 
   function handleLogin(
-    event: React.FormEvent
+    event: React.FormEvent<HTMLFormElement>
   ) {
     event.preventDefault()
 
-    navigate('/dashboard')
+    toast.success('Login successful')
+
+    setTimeout(() => {
+      navigate('/dashboard')
+    }, 1000)
   }
 
   return (
@@ -111,11 +116,17 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-8 flex items-center justify-between text-sm text-white/40">
-          <button className="transition hover:text-white">
+          <button
+            type="button"
+            className="transition hover:text-white"
+          >
             Forgot password
           </button>
 
-          <button className="transition hover:text-white">
+          <button
+            type="button"
+            className="transition hover:text-white"
+          >
             Create account
           </button>
         </div>

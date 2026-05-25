@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast'
+
 import {
   Area,
   AreaChart,
@@ -83,6 +85,19 @@ const metrics = [
 export default function DashboardPage() {
   return (
     <div className="space-y-8">
+      <div className="flex justify-end">
+        <button
+          onClick={() =>
+            toast.success(
+              'Analytics updated successfully'
+            )
+          }
+          className="rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-black transition hover:bg-cyan-300"
+        >
+          Trigger Notification
+        </button>
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         {metrics.map((metric) => (
           <div
